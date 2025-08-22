@@ -3,6 +3,9 @@ package com.data.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "orders")
 public class Orders {
@@ -16,6 +19,9 @@ public class Orders {
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "ship_add_id", referencedColumnName = "ship_id")
     private ShippingAddress shippingAddress;
+
+    @OneToMany(mappedBy = "orders" , cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<OrderItems> list_orderItems = new ArrayList<>();
 
     public ShippingAddress getShippingAddress() {
         return shippingAddress;
@@ -46,13 +52,27 @@ public class Orders {
         this.quantity = quantity;
     }
 
+    public List<OrderItems> getOrderItems() {
+        return list_orderItems;
+    }
+
+    public void setOrderItems(List<OrderItems> orderItems) {
+        this.list_orderItems = orderItems;
+    }
+
+    public void addOrderItem(OrderItems orderItems){
+        list_orderItems.add(orderItems);
+        orderItems.setOrders(this);
+    }
+
     @Override
     public String toString() {
         return "Orders{" +
                 "id=" + id +
                 ", price=" + price +
                 ", quantity=" + quantity +
-                ", shippingAddress=" + shippingAddress.toString() +
+                ", shippingAddress=" + shippingAddress.toString()+
+                ", orderItems=" + list_orderItems.toString() +
                 '}';
     }
 }

@@ -18,6 +18,9 @@
         <mapping class="com.data.utility.HibernateUtility"/>
         <mapping class="com.data.entity.Orders"/>
         <mapping class="com.data.entity.ShippingAddress"/>
+        <mapping class="com.data.entity.OrderItems"/>
+        <mapping class="com.data.entity.Category"/>
+        <mapping class="com.data.entity.Product"/>
     </session-factory>
 
 </hibernate-configuration>
